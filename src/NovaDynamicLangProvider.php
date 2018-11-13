@@ -76,8 +76,5 @@ class NovaDynamicLangProvider extends ServiceProvider
 			database_path('migrations/'.date('Y_m_d_His', time()).'_create_language_sections_table.php'),
 		], 'migrations');
 
-		$this->publishes([
-			__DIR__.'/../resources/data/languages.json' => storage_path('data/languages.json'),
-		],'storage');
 	}
 }

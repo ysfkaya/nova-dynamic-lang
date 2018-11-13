@@ -15,7 +15,7 @@ composer install ysfkaya/nova-dynamic-lang
 And you need to publish the migration and config files
 
 ```bash
-php artisan vendor:publish --provider=Ysfkaya\NovaDynamicLang\DynamicLangProvider --tag=config,migrations
+php artisan vendor:publish --provider="Ysfkaya\NovaDynamicLang\NovaDynamicLangProvider"
 ```
 
 You must register the tool with Nova
