@@ -1,0 +1,30 @@
+{
+    "name": "ysfkaya/nova-dynamic-lang",
+    "description": "This tool is provide management the your language files by dynamical",
+    "keywords": [
+        "laravel",
+        "nova",
+        "languages"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ysfkaya\\NovaDynamicLang\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ysfkaya\\NovaDynamicLang\\NovaDynamicLangProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
