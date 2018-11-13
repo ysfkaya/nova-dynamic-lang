@@ -68,7 +68,8 @@ class Language
 		$string = '';
 
 		foreach ($fields as $field) {
-			$string .= '"'.$field['code'].'" => "'.$field['value'].'"';
+			$string .= '"'.$field['code'].'" => "'.$field['value'].'",';
+			$string .= "\n";
 		}
 
 		return $string;
