@@ -92,7 +92,9 @@ class LanguageAdapter
 
 		$this->model->saveOrFail();
 
-		$this->uploadFileToFlag($request->file('flag'), $this->model->id);
+		if ($request->hasFile('flag')){
+			$this->uploadFileToFlag($request->file('flag'), $this->model->id);
+		}
 
 		return $this->language->create($code, $fields);
 	}

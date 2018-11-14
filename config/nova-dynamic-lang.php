@@ -17,7 +17,7 @@ return [
 	'default_languages_path' => null,
 
 	/**
-	 * To save flag file storage disk
+	 * To save flag file to storage disk
 	 */
 	'disk' => 'public',
 

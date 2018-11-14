@@ -80,7 +80,11 @@
 
                 this.shortNameField.value = this.language.short_name;
                 this.statusField.value = this.language.status;
-                this.fileField.thumbnailUrl = this.language.flag.thumb_url;
+
+                if (this.language.flag) {
+                    this.fileField.thumbnailUrl = this.language.flag.thumb_url;
+                }
+
 
                 this.loading = false;
             },

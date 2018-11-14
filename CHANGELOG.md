@@ -1,6 +1,11 @@
 # CHANGELOG
 
 
+## 1.0.1 - 2018-11-14
+
+- Flag requirement removed when creating a language
+- Updated `README.md`
+
 ## 1.0.0 - 2018-11-14
 
 - Released 1.0.0

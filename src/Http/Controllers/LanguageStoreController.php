@@ -32,7 +32,7 @@ class LanguageStoreController extends Controller
 					}
 				},
 			],
-			'flag' => 'required|image|dimensions:max_width=32,max_height=32',
+			'flag' => 'image|dimensions:max_width=32,max_height=32',
 			'short_name' => 'required|max:10',
 		]);
 

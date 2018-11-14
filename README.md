@@ -56,9 +56,8 @@ public function tools()
     ```
 
 
-## Usage
 
-Select a store to default fields to save in config file
+Select a store to default fields to save
 
 
 ##### Rules (For Store : array,json)
@@ -129,8 +128,13 @@ Database store is management your fields by dynamical. It allows you use a nova 
 ],
 ```
 
+## Usage
 
+You can use `@lang` blade directive to display text by your app language
 
+```blade
+@lang('frontend.hello')
+```
 
 
 
