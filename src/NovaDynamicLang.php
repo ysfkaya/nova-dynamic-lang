@@ -19,8 +19,8 @@ class NovaDynamicLang extends Tool
 	 */
 	public function boot()
 	{
-		Nova::script('dynamic-multilingual', __DIR__.'/../dist/js/tool.js');
-		Nova::style('dynamic-multilingual', __DIR__.'/../dist/css/tool.css');
+		Nova::script('nova-dynamic-lang', __DIR__.'/../dist/js/tool.js');
+		Nova::style('nova-dynamic-lang', __DIR__.'/../dist/css/tool.css');
 	}
 
 	/**
@@ -30,6 +30,6 @@ class NovaDynamicLang extends Tool
 	 */
 	public function renderNavigation()
 	{
-		return view('dynamic-multilingual::navigation');
+		return view('nova-dynamic-lang::navigation');
 	}
 }

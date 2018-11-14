@@ -17,7 +17,7 @@ class NovaDynamicLangProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		$this->loadViewsFrom(__DIR__.'/../resources/views', 'dynamic-multilingual');
+		$this->loadViewsFrom(__DIR__.'/../resources/views', 'nova-dynamic-lang');
 
 		$this->loadPublishes();
 
