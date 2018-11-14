@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/languages', 'LanguagesController@index');
-Route::get('/language/{code}', 'LanguagesController@edit');
+Route::get('/language/{code}', 'LanguagesController@fetch');
 Route::get('/defaults', 'LanguagesController@defaults');
 Route::post('/store', 'LanguageStoreController@handle');
 Route::delete('/delete/{code}', 'LanguageDeleteController@handle');

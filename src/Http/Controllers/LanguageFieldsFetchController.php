@@ -22,7 +22,8 @@ class LanguageFieldsFetchController extends Controller
 		$store = DynamicMultilingualStore::driver();
 
 		if ($request->get('mode') === 'edit') {
-			$fields = array_get(Language::firstByCode($request->get('id')), 'fields',[]);
+			$language = Language::firstByCode($request->get('id'));
+			$fields = $language['fields'] ?? [];
 
 			$store->withFields($fields);
 		}

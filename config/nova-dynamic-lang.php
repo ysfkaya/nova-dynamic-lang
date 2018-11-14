@@ -17,6 +17,11 @@ return [
 	'default_languages_path' => null,
 
 	/**
+	 * To save flag file storage disk
+	 */
+	'disk' => 'public',
+
+	/**
 	 * You may define defaults units to save language file
 	 */
 	'sections' => [

@@ -10,6 +10,12 @@
                 <!-- Fields -->
                 <language-search :languages="languages" v-model="language" :errors="errors"/>
 
+                <form-text-field :field="shortNameField" :errors="errors"/>
+
+                <form-file-field :field="fileField" :errors="errors"/>
+
+                <form-boolean-field :field="statusField" :errors="errors"/>
+
                 <!-- Create Button -->
                 <div class="bg-30 flex px-8 py-4">
                     <button dusk="show-language-fields" class="text-left btn btn-default" :class="buttonClass" type="button" @click="showLanguageSections = !showLanguageSections">
@@ -38,15 +44,32 @@
     export default {
         name: "CreateLanguage",
         components: {LanguageSearch, LanguageSections},
-        data: () => ({
-            loading: true,
-            language: null,
-            languages: [],
-            working: false,
-            languageFields: [],
-            showLanguageSections: true,
-            errors: new Errors(),
-        }),
+        data: function () {
+            return {
+                loading: true,
+                language: null,
+                languages: [],
+                working: false,
+                languageFields: [],
+                showLanguageSections: true,
+                errors: new Errors(),
+                fileField: {
+                    attribute: 'flag',
+                    name: this.__('Flag'),
+                    helpText: this.__('Max Width : 32px , Max Height : 32px')
+                },
+                shortNameField: {
+                    attribute: 'short_name',
+                    name: this.__('Short Name'),
+                    helpText: this.__('Example: ENG')
+                },
+                statusField: {
+                    attribute: 'status',
+                    name: this.__('Status'),
+                    value: true
+                }
+            }
+        },
         created() {
             this.load()
         },
@@ -75,6 +98,7 @@
                 this.languages = data;
 
                 this.loading = false
+
             },
 
             async createLanguage() {
@@ -112,9 +136,13 @@
 
                         formData.append('label', this.language.label);
                         formData.append('code', this.language.code);
-
-                        formData.append('fields', JSON.stringify(this.languageFields));
                     }
+
+                    formData.append('fields', JSON.stringify(this.languageFields));
+
+                    this.fileField.fill(formData);
+                    this.shortNameField.fill(formData);
+                    this.statusField.fill(formData);
                 })
             }
         }

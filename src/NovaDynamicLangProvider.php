@@ -43,7 +43,7 @@ class NovaDynamicLangProvider extends ServiceProvider
 
 		Route::middleware(['nova', Authorize::class])
 			->namespace('Ysfkaya\\NovaDynamicLang\\Http\\Controllers')
-			->prefix('nova-vendor/dynamic-multilingual')
+			->prefix('nova-vendor/nova-dynamic-lang')
 			->group(__DIR__.'/../routes/api.php');
 	}
 
@@ -61,7 +61,7 @@ class NovaDynamicLangProvider extends ServiceProvider
 		});
 
 		$this->app->singleton(Language::class, function ($app) {
-			return new Language;
+			return new LanguageAdapter(new Language);
 		});
 	}
 
@@ -72,9 +72,9 @@ class NovaDynamicLangProvider extends ServiceProvider
 		], 'config');
 
 		$this->publishes([
-			__DIR__.'/../database/migrations/create_language_sections_table.php.stub' =>
-			database_path('migrations/'.date('Y_m_d_His', time()).'_create_language_sections_table.php'),
+			__DIR__.'/../database/migrations/create_language_tables.php.stub' => database_path('migrations/'
+			                                                                                           .date('Y_m_d_His', time())
+			                                                                                           .'_create_language_tables.php'),
 		], 'migrations');
-
 	}
 }

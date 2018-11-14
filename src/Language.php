@@ -6,8 +6,9 @@
 namespace Ysfkaya\NovaDynamicLang;
 
 use Illuminate\Support\Facades\File;
+use Ysfkaya\NovaDynamicLang\Contracts\LanguageInterface;
 
-class Language
+class Language implements LanguageInterface
 {
 	public function delete($code)
 	{
@@ -103,6 +104,9 @@ class Language
 		return json_decode($contents, true);
 	}
 
+	/**
+	 * @return \Illuminate\Support\Collection
+	 */
 	public function all()
 	{
 		$languages = collect();

@@ -5,7 +5,6 @@
 namespace Ysfkaya\NovaDynamicLang\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Ysfkaya\NovaDynamicLang\Facades\Language;
 
 class LanguagesController
@@ -19,7 +18,7 @@ class LanguagesController
 		]);
 	}
 
-	public function edit($code)
+	public function fetch($code)
 	{
 		return response()->json(Language::firstByCode($code));
 	}
@@ -30,5 +29,4 @@ class LanguagesController
 
 		return response()->json($contents);
 	}
-
 }

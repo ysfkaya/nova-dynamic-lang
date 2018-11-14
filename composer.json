@@ -4,7 +4,8 @@
     "keywords": [
         "laravel",
         "nova",
-        "languages"
+        "languages",
+        "nova tool"
     ],
     "license": "MIT",
     "require": {

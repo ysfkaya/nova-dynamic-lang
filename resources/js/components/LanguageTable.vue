@@ -9,12 +9,20 @@
 
             <th class="w-16">&nbsp;</th>
 
-            <th class="text-left">
+            <th class="text-left w-16">
                 {{ __('Code') }}
             </th>
 
-            <th class="text-left">
+            <th class="text-center">
+                {{ __('Flag') }}
+            </th>
+
+            <th class="text-center">
                 {{ __('Label') }}
+            </th>
+
+            <th class="text-center">
+                {{ __('Status') }}
             </th>
 
             <th>&nbsp;<!-- View, Edit, Delete --></th>
@@ -26,10 +34,19 @@
             <td class="whitespace-no-wrap text-left">
                 {{ language.code }}
             </td>
-            <td class="whitespace-no-wrap text-left">
+            <td class="whitespace-no-wrap text-center">
+                <p class="text-center">
+                    <img :src="language.flag.thumb_url">
+                </p>
+            </td>
+            <td class="whitespace-no-wrap text-center">
                 {{ language.label }}
             </td>
-            <td class="whitespace-no-wrap text-right">
+            <td class="whitespace-no-wrap text-center">
+                  <span class="inline-block rounded-full w-2 h-2"
+                          :class="{'bg-success': language.status, 'bg-danger': !language.status}" />
+            </td>
+            <td class="td-fit text-right pr-6">
                 <router-link
                         class="cursor-pointer text-70 hover:text-primary mr-3"
                         :to="{name: 'languages.edit',  params: {

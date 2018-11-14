@@ -1,6 +1,6 @@
 <!--suppress EqualityComparisonWithCoercionJS -->
 <template>
-    <default-field :field="field" :errors="errors" :full-width-content="true">
+    <default-field :field="field" :errors="errors">
         <template slot="field">
             <search-input
                     @input="performSearch"
