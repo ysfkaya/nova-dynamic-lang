@@ -29,7 +29,7 @@ public function tools()
 {
    return [
         // ...
-        new Ysfkaya\NovaDynamicLang\DynamicLang(),
+        new \Ysfkaya\NovaDynamicLang\NovaDynamicLang,
     );
 }
 ```
