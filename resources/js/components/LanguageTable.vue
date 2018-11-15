@@ -36,7 +36,8 @@
             </td>
             <td class="whitespace-no-wrap text-center">
                 <p class="text-center">
-                    <img :src="language.flag.thumb_url">
+                    <img :src="language.flag.thumb_url" v-if="language.flag">
+                    <span v-else>-</span>
                 </p>
             </td>
             <td class="whitespace-no-wrap text-center">
@@ -44,7 +45,7 @@
             </td>
             <td class="whitespace-no-wrap text-center">
                   <span class="inline-block rounded-full w-2 h-2"
-                          :class="{'bg-success': language.status, 'bg-danger': !language.status}" />
+                        :class="{'bg-success': language.status, 'bg-danger': !language.status}"/>
             </td>
             <td class="td-fit text-right pr-6">
                 <router-link
