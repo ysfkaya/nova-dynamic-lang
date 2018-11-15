@@ -5,7 +5,8 @@
 
 - Changed assets and view namespace
 - Added `dropIfExists` in migration
-- Fixed flag display error in table
+- Fixed flag display error in language table
+- Fixed error when update a language with a file if not exists language flag before.
 
 ## 1.0.1 - 2018-11-14
 

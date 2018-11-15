@@ -14,122 +14,125 @@ use Ysfkaya\NovaDynamicLang\Models\LanguageFlag;
 
 class LanguageAdapter
 {
-	/**
-	 * @var \Ysfkaya\NovaDynamicLang\Contracts\LanguageInterface
-	 */
-	protected $language;
+    /**
+     * @var \Ysfkaya\NovaDynamicLang\Contracts\LanguageInterface
+     */
+    protected $language;
 
-	/**
-	 * @var \Ysfkaya\NovaDynamicLang\Models\Language
-	 */
-	protected $model;
+    /**
+     * @var \Ysfkaya\NovaDynamicLang\Models\Language
+     */
+    protected $model;
 
-	public function __construct(LanguageInterface $language)
-	{
-		$this->language = $language;
-		$this->model = new Model();
-	}
+    public function __construct(LanguageInterface $language)
+    {
+        $this->language = $language;
+        $this->model = new Model();
+    }
 
-	public function exists($lang)
-	{
-		return $this->language->exists($lang) && $this->model->where('code', $lang)->count() > 0;
-	}
+    public function exists($lang)
+    {
+        return $this->language->exists($lang) && $this->model->where('code', $lang)->count() > 0;
+    }
 
-	/**
-	 * @param $code
-	 *
-	 * @return mixed
-	 */
-	public function delete($code)
-	{
-		$this->model->where('code', $code)->firstOrFail()->delete();
+    /**
+     * @param $code
+     *
+     * @return mixed
+     */
+    public function delete($code)
+    {
+        $this->model->where('code', $code)->firstOrFail()->delete();
 
-		return $this->language->delete($code);
-	}
+        return $this->language->delete($code);
+    }
 
-	public function all()
-	{
-		return $this->model->all()->map(function ($model) {
-			return array_merge([
-				'label' => $model->name,
-			], $model->toArray());
-		});
-	}
+    public function all()
+    {
+        return $this->model->all()->map(function ($model) {
+            return array_merge([
+                'label' => $model->name,
+            ], $model->toArray());
+        });
+    }
 
-	public function update(Request $request, $code)
-	{
-		$language = $this->model->where('code', $code)->firstOrFail();
-		$fields = json_decode($request->get('fields', '[]'), true);
+    public function update(Request $request, $code)
+    {
+        $language = $this->model->where('code', $code)->firstOrFail();
+        $fields = json_decode($request->get('fields', '[]'), true);
 
-		$language->update([
-			'short_name' => $request->get('short_name'),
-			'fields' => $fields,
-			'status' => (bool)$request->get('status'),
-		]);
+        $language->update([
+            'short_name' => $request->get('short_name'),
+            'fields' => $fields,
+            'status' => (bool)$request->get('status'),
+        ]);
 
-		if ($request->hasFile('flag')) {
+        if ($request->hasFile('flag')) {
 
-			$language->flag->delete();
+            if (!is_null($language->flag)) {
+                $language->flag->delete();
+            }
 
-			$this->uploadFileToFlag($request->file('flag'), $language->id);
-		}
 
-		return $this->language->update($code, $fields);
-	}
+            $this->uploadFileToFlag($request->file('flag'), $language->id);
+        }
 
-	public function create(Request $request)
-	{
-		$code = $request->get('code');
-		$fields = json_decode($request->get('fields', '[]'), true);
+        return $this->language->update($code, $fields);
+    }
 
-		$this->model->fill([
-			'code' => $code,
-			'name' => $request->get('label'),
-			'short_name' => $request->get('short_name'),
-			'fields' => $fields,
-			'status' => (bool)$request->get('status'),
-		]);
+    public function create(Request $request)
+    {
+        $code = $request->get('code');
+        $fields = json_decode($request->get('fields', '[]'), true);
 
-		$this->model->saveOrFail();
+        $this->model->fill([
+            'code' => $code,
+            'name' => $request->get('label'),
+            'short_name' => $request->get('short_name'),
+            'fields' => $fields,
+            'status' => (bool)$request->get('status'),
+        ]);
 
-		if ($request->hasFile('flag')){
-			$this->uploadFileToFlag($request->file('flag'), $this->model->id);
-		}
+        $this->model->saveOrFail();
 
-		return $this->language->create($code, $fields);
-	}
+        if ($request->hasFile('flag')) {
+            $this->uploadFileToFlag($request->file('flag'), $this->model->id);
+        }
 
-	public function firstByCode($code)
-	{
-		$language = $this->model->where('code', $code)->firstOrFail()->toArray();
+        return $this->language->create($code, $fields);
+    }
 
-		$language['fields'] = array_get($this->language->firstByCode($code), 'fields');
+    public function firstByCode($code)
+    {
+        $language = $this->model->where('code', $code)->firstOrFail()->toArray();
 
-		return $language;
-	}
+        $language['fields'] = array_get($this->language->firstByCode($code), 'fields');
 
-	protected function uploadFileToFlag(UploadedFile $file, $id)
-	{
-		$fileName = time().'_flag'.'.'.$file->getClientOriginalExtension();
+        return $language;
+    }
 
-		$imageDetail = getimagesize($file->getRealPath());
+    protected function uploadFileToFlag(UploadedFile $file, $id)
+    {
+        $fileName = time() . '_flag' . '.' . $file->getClientOriginalExtension();
 
-		LanguageFlag::create([
-			'language_id' => $id,
-			'file_name' => $fileName,
-			'original_name' => $file->getClientOriginalName(),
-			'width' => $imageDetail[0],
-			'height' => $imageDetail[1],
-			'size' => $file->getSize(),
-		]);
+        $imageDetail = getimagesize($file->getRealPath());
 
-		return Storage::disk(config('nova-dynamic-lang.disk', 'public'))->putFileAs('flags/', $file, $fileName);
-	}
+        LanguageFlag::create([
+            'language_id' => $id,
+            'file_name' => $fileName,
+            'original_name' => $file->getClientOriginalName(),
+            'width' => $imageDetail[0],
+            'height' => $imageDetail[1],
+            'size' => $file->getSize(),
+        ]);
 
-	public function __call($name, $arguments)
-	{
-		$args = count($arguments) === 1 ? $arguments[0] : $arguments;
+        return Storage::disk(config('nova-dynamic-lang.disk', 'public'))->putFileAs('flags/', $file, $fileName);
+    }
 
-		return $this->language->{$name}($args);
-	}
+    public function __call($name, $arguments)
+    {
+        $args = count($arguments) === 1 ? $arguments[0] : $arguments;
+
+        return $this->language->{$name}($args);
+    }
 }
